@@ -188,7 +188,7 @@ class Sendy
      * @param Model\Campaign $campaign configured campaign
      * @param string|NULL $statusMessage optional - here will be returned status message f.e. if you get FALSE again, and again, here you can find why
      * @throws \SendyPHP\Exception [\SendyPHP\Exception\CurlException]
-     * @return bool
+     * @return bool|int
      */
     public function createCampaign($brandID, Model\Campaign $campaign, &$statusMessage = NULL)
     {
@@ -207,7 +207,9 @@ class Sendy
 
         $response = $this->_callSendy(self::URI_CAMPAIGN,$request);
         $statusMessage = $response;
-        if($response == 'Campaign created')
+        if(preg_match('/^Campaign created \[[0-9]+\]$/', $response, $m))
+            return $m[1];
+        elseif($response == 'Campaign created')
             return true;
         else
             return false;
@@ -219,7 +221,7 @@ class Sendy
      * @param Model\Campaign $campaign configured campaign
      * @param string|NULL $statusMessage optional - here will be returned status message f.e. if you get FALSE again, and again, here you can find why
      * @throws \SendyPHP\Exception [\SendyPHP\Exception\CurlException|\SendyPHP\Exception\DomainException]
-     * @return bool
+     * @return bool|int
      */
     public function sendCampaign(array $listIDs, Model\Campaign $campaign, &$statusMessage = NULL)
     {
@@ -241,7 +243,9 @@ class Sendy
 
         $response = $this->_callSendy(self::URI_CAMPAIGN,$request);
         $statusMessage = $response;
-        if($response == 'Campaign created and now sending')
+        if(preg_match('/^Campaign created and now sending \[[0-9]+\]$/', $response, $m))
+            return $m[1];
+        elseif($response == 'Campaign created and now sending')
             return true;
         else
             return false;
