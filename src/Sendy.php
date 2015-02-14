@@ -207,7 +207,7 @@ class Sendy
 
         $response = $this->_callSendy(self::URI_CAMPAIGN,$request);
         $statusMessage = $response;
-        if(preg_match('/^Campaign created \[[0-9]+\]$/', $response, $m))
+        if(preg_match('/^Campaign created \[([0-9]+)\]$/', $response, $m))
             return $m[1];
         elseif($response == 'Campaign created')
             return true;
@@ -243,7 +243,7 @@ class Sendy
 
         $response = $this->_callSendy(self::URI_CAMPAIGN,$request);
         $statusMessage = $response;
-        if(preg_match('/^Campaign created and now sending \[[0-9]+\]$/', $response, $m))
+        if(preg_match('/^Campaign created and now sending \[([0-9]+)\]$/', $response, $m))
             return $m[1];
         elseif($response == 'Campaign created and now sending')
             return true;
