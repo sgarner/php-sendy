@@ -19,10 +19,20 @@ class Campaign
      */
     protected $_subject = NULL;
     /**
+     * Campaign title
+     * @var string
+     */
+    protected $_title = NULL;
+    /**
      * Email body
      * @var EmailBody
      */
     protected $_emailBody = NULL;
+    /**
+     * Query string appended to URLs
+     * @var string
+     */
+    protected $_queryString = NULL;
 
     /**
      * Sendy campaign settings
@@ -33,7 +43,7 @@ class Campaign
      *
      * @throws \SendyPHP\Exception\DomainException
      */
-    public function __construct(Sender $sender = NULL, $subject = NULL, EmailBody $emailBody = NULL)
+    public function __construct(Sender $sender = NULL, $subject = NULL, EmailBody $emailBody = NULL, $title = NULL, $queryString = NULL)
     {
         if(!is_null($sender))
             $this->setSenderSettings($sender);
@@ -43,6 +53,12 @@ class Campaign
 
         if(!is_null($emailBody))
             $this->setEmailBodyVariants($emailBody);
+
+        if(!is_null($title))
+            $this->setTitle($title);
+
+        if(!is_null($queryString))
+            $this->setQueryString($queryString);
     }
     /**
      * Sets e-mail body
@@ -124,5 +140,36 @@ class Campaign
     public function getSubject()
     {
         return $this->_subject;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTitle ()
+    {
+        return $this->_title;
+    }
+
+    /**
+     * @param string $title
+     */
+    public function setTitle ($title)
+    {
+        $this->_title = $title;
+    }
+
+    /**
+     * @param string $queryString
+     */
+    public function setQueryString ($queryString)
+    {
+        $this->_queryString = $queryString;
+    }
+    /**
+     * @return string
+     */
+    public function getQueryString ()
+    {
+        return $this->_queryString;
     }
 }

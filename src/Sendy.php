@@ -200,11 +200,16 @@ class Sendy
                             'html_text'=>$campaign->getEmailBody()->getHtml(),
                             'brand_id'=>$brandID,
                             'list_ids'=>implode(',',$listIDs),
+                            'query_string'=>$campaign->getQueryString(),
                             'send_campaign'=>0);
 
         $plainText = $campaign->getEmailBody()->getPlainText();
         if(!is_null($plainText))
             $request['plain_text'] = $plainText;
+
+        $title = $campaign->getTitle();
+        if (!is_null($title))
+            $request['title'] = $title;
 
         $response = $this->_callSendy(self::URI_CAMPAIGN,$request);
         $statusMessage = $response;
@@ -236,11 +241,16 @@ class Sendy
                             'subject'=>$campaign->getSubject(),
                             'html_text'=>$campaign->getEmailBody()->getHtml(),
                             'list_ids'=>implode(',',$listIDs),
+                            'query_string'=>$campaign->getQueryString(),
                             'send_campaign'=>1);
 
         $plainText = $campaign->getEmailBody()->getPlainText();
         if(!is_null($plainText))
             $request['plain_text'] = $plainText;
+
+        $title = $campaign->getTitle();
+        if (!is_null($title))
+            $request['title'] = $title;
 
         $response = $this->_callSendy(self::URI_CAMPAIGN,$request);
         $statusMessage = $response;
