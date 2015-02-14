@@ -190,7 +190,7 @@ class Sendy
      * @throws \SendyPHP\Exception [\SendyPHP\Exception\CurlException]
      * @return bool|int
      */
-    public function createCampaign($brandID, Model\Campaign $campaign, &$statusMessage = NULL)
+    public function createCampaign($brandID, array $listIDs, Model\Campaign $campaign, &$statusMessage = NULL)
     {
         $request = array(   'api_key'=>$this->_getApiKey(),
                             'from_name'=>$campaign->getSender()->getName(),
@@ -199,6 +199,7 @@ class Sendy
                             'subject'=>$campaign->getSubject(),
                             'html_text'=>$campaign->getEmailBody()->getHtml(),
                             'brand_id'=>$brandID,
+                            'list_ids'=>implode(',',$listIDs),
                             'send_campaign'=>0);
 
         $plainText = $campaign->getEmailBody()->getPlainText();
